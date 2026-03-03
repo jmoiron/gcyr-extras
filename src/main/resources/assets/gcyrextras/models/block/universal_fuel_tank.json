@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end":  "gcyrextras:block/universal_fuel_tank_end",
+    "side": "gcyrextras:block/universal_fuel_tank_side"
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=x": { "model": "gcyrextras:block/universal_fuel_tank", "x": 90, "y": 90 },
+        "axis=y": { "model": "gcyrextras:block/universal_fuel_tank" },
+        "axis=z": { "model": "gcyrextras:block/universal_fuel_tank", "x": 90 }
+    }
+}

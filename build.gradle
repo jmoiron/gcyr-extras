@@ -1,0 +1,110 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    alias libs.plugins.modDevGradle
+    alias libs.plugins.lombok
+}
+
+group = project.properties.maven_group
+version = project.properties.mod_version
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+base {
+    archivesName = "${project.name}-${libs.versions.minecraft.get()}"
+}
+
+sourceSets {
+    main.resources {
+        srcDir 'src/generated/resources'
+    }
+}
+
+legacyForge {
+    version = libs.versions.minecraft.get() + '-' + libs.versions.forge.get()
+
+    parchment {
+        minecraftVersion = libs.versions.minecraft.get()
+        mappingsVersion  = libs.versions.parchment.get()
+    }
+
+    mods {
+        "${project.properties.mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+
+    runs {
+        client {
+            client()
+            gameDirectory.set(file('runs/client'))
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+        server {
+            server()
+            gameDirectory.set(file('runs/server'))
+            programArgument '--nogui'
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+        data {
+            data()
+            gameDirectory.set(file('runs/data'))
+            programArguments.addAll('--mod', project.mod_id, '--all',
+                '--output', file('src/generated/resources/').absolutePath,
+                '--existing', file('src/main/resources/').absolutePath)
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    exclusiveContent { // Modrinth Maven — gcyr
+        forRepository { maven { url = 'https://api.modrinth.com/maven/' } }
+        filter { includeGroup('maven.modrinth') }
+    }
+
+    maven { // GTCEu — ldlib, registrate, configuration, and mixinextras are all
+            // bundled inside the gtceu jar via JarJar, so this is the only extra repo needed
+        name = 'GTCEu Maven'
+        url = 'https://maven.gtceu.com'
+        content { includeGroup 'com.gregtechceu.gtceu' }
+    }
+}
+
+dependencies {
+    // gcyr: compile + runtime (our direct dependency)
+    modImplementation(deps.gcyr) { transitive = false }
+
+    // gtceu: runtime only — gcyr requires it, and it bundles ldlib, registrate,
+    // configuration, and mixinextras via JarJar, so no additional deps needed
+    modRuntimeOnly(deps.gtceu) { transitive = false }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest.attributes([
+        'Specification-Title'   : project.name,
+        'Specification-Version' : project.properties.mod_version,
+        'Implementation-Title'  : base.archivesName.get(),
+        'Implementation-Version': project.version,
+    ])
+}
+
+tasks.matching { it.name.startsWith('prepare') }.configureEach {
+    doFirst {
+        mkdir('runs/client')
+        mkdir('runs/server')
+        mkdir('runs/data')
+    }
+}
