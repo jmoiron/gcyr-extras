@@ -1,3 +1,5 @@
+![](icon.png)
+
 # gcyr extras
 
 gcyre is an addon mod for [gregicality rocketry](https://github.com/Argent-Matter/gcyr). At present it does two things:
@@ -7,3 +9,4 @@ gcyre is an addon mod for [gregicality rocketry](https://github.com/Argent-Matte
 
 The additional tiers provide modpack authors with extra flexibility in gating custom planets.
 
+No recipes are provided for the additional tiers.
