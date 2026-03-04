@@ -83,9 +83,9 @@ dependencies {
     // gcyr: compile + runtime (our direct dependency)
     modImplementation(deps.gcyr) { transitive = false }
 
-    // gtceu: runtime only — gcyr requires it, and it bundles ldlib, registrate,
-    // configuration, and mixinextras via JarJar, so no additional deps needed
-    modRuntimeOnly(deps.gtceu) { transitive = false }
+    // gtceu: compile + runtime — we use GTAddon/IGTAddon APIs directly; it also
+    // bundles ldlib, registrate, configuration, and mixinextras via JarJar
+    modImplementation(deps.gtceu) { transitive = false }
 }
 
 tasks.withType(JavaCompile).configureEach {
