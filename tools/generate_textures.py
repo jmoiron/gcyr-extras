@@ -21,7 +21,7 @@ Outputs are written under:
     - casings/<tier>_rocket_motor/*.png
     - <tier>_fuel_tank_{side,end}.png
 
-You can adjust colors in the TIERS dict below.
+You can adjust colors in MOTOR_TIERS and TANK_TIERS below.
 """
 
 from __future__ import annotations
@@ -45,17 +45,29 @@ except ImportError as e:
 # Configuration
 # ---------------------------------------------------------------------------
 
-# New tiers and their base/highlight colors (ARGB hex or RGB tuple).
-# Tweak to your preference — these are reasonable starting points.
-TIERS: Dict[str, Dict[str, Tuple[int, int, int]]] = {
-    # dark blue -> softer light blue (slightly darker overall)
-    "stellar":   {"base": (0x24, 0x3B, 0x8E), "highlight": (0x8D, 0xA8, 0xF0)},
-    # deep purple -> muted lavender
-    "galactic":  {"base": (0x50, 0x18, 0x90), "highlight": (0xAA, 0x82, 0xE6)},
-    # deep teal -> subdued mint
-    "cosmic":    {"base": (0x08, 0x6E, 0x58), "highlight": (0x60, 0xD2, 0xBC)},
-    # brass gold -> pale gold
-    "universal": {"base": (0x96, 0x7D, 0x00), "highlight": (0xE6, 0xC8, 0x5A)},
+# New motor tier palettes (base/highlight). Adjust freely.
+MOTOR_TIERS: Dict[str, Dict[str, Tuple[int, int, int]]] = {
+    # Much darker + slightly desaturated sets to match GCYR motors
+    # navy -> muted slate blue
+    "stellar":   {"base": (0x12, 0x1C, 0x40), "highlight": (0x55, 0x68, 0x94)},
+    # deep eggplant -> dusty violet
+    "galactic":  {"base": (0x2C, 0x14, 0x42), "highlight": (0x70, 0x58, 0x88)},
+    # deep teal-green -> muted seafoam
+    "cosmic":    {"base": (0x0C, 0x34, 0x2E), "highlight": (0x4E, 0x70, 0x68)},
+    # dark bronze -> muted brass
+    "universal": {"base": (0x4A, 0x3C, 0x0A), "highlight": (0x84, 0x6E, 0x2E)},
+}
+
+# Separate tank tier palettes — a bit darker/more muted than motors
+TANK_TIERS: Dict[str, Dict[str, Tuple[int, int, int]]] = {
+    # steel-blue, darker body with muted highlights
+    "stellar":   {"base": (0x1E, 0x2E, 0x66), "highlight": (0x6F, 0x85, 0xC9)},
+    # deep plum body, violet highlights
+    "galactic":  {"base": (0x3E, 0x14, 0x5F), "highlight": (0x8F, 0x6A, 0xC9)},
+    # dark pine/teal body, aqua highlights
+    "cosmic":    {"base": (0x06, 0x56, 0x46), "highlight": (0x4C, 0xBF, 0xA8)},
+    # dark bronze body, brass highlights
+    "universal": {"base": (0x70, 0x5A, 0x00), "highlight": (0xC5, 0xAC, 0x46)},
 }
 
 # Default source tier within gcyr assets for both motor and tank recolors.
@@ -198,7 +210,7 @@ def copy_if_exists(src: Path, dst: Path) -> None:
 
 
 def process_motor(tier: str, source_tier: str, out_root: Path) -> None:
-    colors = TIERS[tier]
+    colors = MOTOR_TIERS[tier]
     palette = build_palette(colors["base"], colors["highlight"], steps=48)
     srcs = find_motor_sources(source_tier)
 
@@ -243,7 +255,7 @@ def process_motor(tier: str, source_tier: str, out_root: Path) -> None:
 
 
 def process_tank(tier: str, source_tier: str, out_root: Path) -> None:
-    colors = TIERS[tier]
+    colors = TANK_TIERS[tier]
     palette = build_palette(colors["base"], colors["highlight"], steps=48)
     srcs = find_tank_sources(source_tier)
 
@@ -287,8 +299,8 @@ def parse_args(argv: Iterable[str]) -> argparse.Namespace:
     p.add_argument(
         "--tiers",
         nargs="*",
-        default=list(TIERS.keys()),
-        help=f"Subset of tiers to generate (default: {', '.join(TIERS.keys())})",
+        default=list(MOTOR_TIERS.keys()),
+        help=f"Subset of tiers to generate (default: {', '.join(MOTOR_TIERS.keys())})",
     )
     return p.parse_args(list(argv))
 
@@ -313,8 +325,8 @@ def main(argv: Iterable[str]) -> int:
 
     tiers = args.tiers
     for tier in tiers:
-        if tier not in TIERS:
-            sys.stderr.write(f"Unknown tier '{tier}'. Known: {', '.join(TIERS.keys())}\n")
+        if tier not in MOTOR_TIERS:
+            sys.stderr.write(f"Unknown tier '{tier}'. Known: {', '.join(MOTOR_TIERS.keys())}\n")
             return 2
 
     for tier in tiers:
