@@ -4,6 +4,7 @@ import argent_matter.gcyr.common.data.GCYRRecipeTypes;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluids;
@@ -18,7 +19,7 @@ public class GcyrExtrasGTAddon implements IGTAddon {
 
     @Override
     public GTRegistrate getRegistrate() {
-        return null;
+        return GcyrExtrasRegistries.REGISTRATE;
     }
 
     @Override

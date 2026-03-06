@@ -71,6 +71,16 @@ repositories {
         filter { includeGroup('maven.modrinth') }
     }
 
+    exclusiveContent { // LDLib
+        forRepository { maven { url = 'https://maven.firstdark.dev/snapshots' } }
+        filter { includeGroup('com.lowdragmc.ldlib') }
+    }
+
+    exclusiveContent { // Registrate
+        forRepository { maven { url = 'https://maven.tterrag.com/' } }
+        filter { includeGroup('com.tterrag.registrate') }
+    }
+
     maven { // GTCEu — ldlib, registrate, configuration, and mixinextras are all
             // bundled inside the gtceu jar via JarJar, so this is the only extra repo needed
         name = 'GTCEu Maven'
@@ -86,6 +96,10 @@ dependencies {
     // gtceu: compile + runtime — we use GTAddon/IGTAddon APIs directly; it also
     // bundles ldlib, registrate, configuration, and mixinextras via JarJar
     modImplementation(deps.gtceu) { transitive = false }
+
+    // Needed at compile time when directly subclassing GTCEu/LDLib types.
+    compileOnly("com.lowdragmc.ldlib:ldlib-forge-1.20.1:1.0.40.b")
+    compileOnly("com.tterrag.registrate:Registrate:MC1.20-1.3.11")
 }
 
 tasks.withType(JavaCompile).configureEach {

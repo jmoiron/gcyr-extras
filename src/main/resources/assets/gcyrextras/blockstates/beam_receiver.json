@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gcyrextras:block/beam_receiver"
+    }
+  }
+}

@@ -34,6 +34,8 @@ public class GcyrExtrasBlocks {
             new EnumMap<>(ExtraRocketMotorType.class);
     public static final Map<ExtraFuelTankProperties, RegistryObject<FuelTankBlock>> TANKS =
             new EnumMap<>(ExtraFuelTankProperties.class);
+    public static final RegistryObject<Block> BEAM_RECEIVER = registerSimpleBlock("beam_receiver");
+    public static final RegistryObject<Block> BEAM_FORMER = registerSimpleBlock("beam_former");
 
     static {
         for (ExtraRocketMotorType type : ExtraRocketMotorType.values()) {
@@ -97,5 +99,12 @@ public class GcyrExtrasBlocks {
     public static void registerWithGcyr() {
         MOTORS.forEach((type, ro) -> GCYRBlocks.ALL_ROCKET_MOTORS.put(type, ro::get));
         TANKS.forEach((props, ro) -> GCYRBlocks.ALL_FUEL_TANKS.put(props, ro::get));
+    }
+
+    private static RegistryObject<Block> registerSimpleBlock(String name) {
+        RegistryObject<Block> block = BLOCKS.register(name,
+                () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+        ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        return block;
     }
 }
