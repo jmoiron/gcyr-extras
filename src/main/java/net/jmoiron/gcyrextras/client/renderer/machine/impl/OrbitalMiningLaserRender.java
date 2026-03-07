@@ -6,7 +6,6 @@ import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.serialization.Codec;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -20,9 +19,9 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
     public static final DynamicRenderType<OrbitalMiningLaserMachine, OrbitalMiningLaserRender> TYPE =
             new DynamicRenderType<>(CODEC);
 
-    private static final float FADEOUT = 12.0f;
-
-    private float delta;
+    private static final int CONTROLLER_X = 7;
+    private static final int CONTROLLER_Y = 3;
+    private static final int CONTROLLER_Z = 0;
 
     @Override
     public DynamicRenderType<OrbitalMiningLaserMachine, OrbitalMiningLaserRender> getType() {
@@ -45,18 +44,25 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
         int glowColor = (color & 0x00FFFFFF) | 0x66000000;
         VertexConsumer consumer = buffer.getBuffer(GcyrExtrasRenderTypes.laserBeam());
 
-        Vec3 center = relativePoint(machine, 7.5, 3.5, 7.5);
-        GcyrExtrasRenderBufferHelper.renderCrossBeam(poseStack, consumer,
-                relativePoint(machine, 7.5, 3.5, 4.5), center, 0.18f, color);
-        GcyrExtrasRenderBufferHelper.renderCrossBeam(poseStack, consumer,
-                relativePoint(machine, 7.5, 3.5, 10.5), center, 0.18f, color);
-        GcyrExtrasRenderBufferHelper.renderCrossBeam(poseStack, consumer,
-                relativePoint(machine, 4.5, 3.5, 7.5), center, 0.18f, color);
-        GcyrExtrasRenderBufferHelper.renderCrossBeam(poseStack, consumer,
-                relativePoint(machine, 10.5, 3.5, 7.5), center, 0.18f, color);
+        GcyrExtrasRenderBufferHelper.renderTubeBeam(poseStack, consumer,
+                patternPoint(machine, 7, 3, 5), patternPoint(machine, 7, 3, 2), 0.16f, color);
+        GcyrExtrasRenderBufferHelper.renderTubeBeam(poseStack, consumer,
+                patternPoint(machine, 7, 3, 9), patternPoint(machine, 7, 3, 12), 0.16f, color);
+        GcyrExtrasRenderBufferHelper.renderTubeBeam(poseStack, consumer,
+                patternPoint(machine, 5, 3, 7), patternPoint(machine, 2, 3, 7), 0.16f, color);
+        GcyrExtrasRenderBufferHelper.renderTubeBeam(poseStack, consumer,
+                patternPoint(machine, 9, 3, 7), patternPoint(machine, 12, 3, 7), 0.16f, color);
+
         GcyrExtrasRenderBufferHelper.renderVerticalBeam(poseStack, consumer,
-                relativePoint(machine, 7.5, 0.5, 7.5), relativePoint(machine, 7.5, -12.0, 7.5),
+                patternPoint(machine, 7, 0, 7), patternPoint(machine, 7, -12, 7),
                 0.22f, 0.45f, color, glowColor);
+    }
+
+    private static Vec3 patternPoint(OrbitalMiningLaserMachine machine, double patternX, double patternY, double patternZ) {
+        double right = CONTROLLER_X - patternX;
+        double up = patternY - CONTROLLER_Y;
+        double back = patternZ - CONTROLLER_Z;
+        return relativePoint(machine, right, up, back);
     }
 
     private static Vec3 relativePoint(OrbitalMiningLaserMachine machine, double right, double up, double back) {
@@ -68,9 +74,9 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
         var backDir = RelativeDirection.BACK.getRelative(front, upwards, flipped);
 
         return new Vec3(
-                rightDir.getStepX() * right + upDir.getStepX() * up + backDir.getStepX() * back,
-                rightDir.getStepY() * right + upDir.getStepY() * up + backDir.getStepY() * back,
-                rightDir.getStepZ() * right + upDir.getStepZ() * up + backDir.getStepZ() * back);
+                0.5 + rightDir.getStepX() * right + upDir.getStepX() * up + backDir.getStepX() * back,
+                0.5 + rightDir.getStepY() * right + upDir.getStepY() * up + backDir.getStepY() * back,
+                0.5 + rightDir.getStepZ() * right + upDir.getStepZ() * up + backDir.getStepZ() * back);
     }
 
     @Override
