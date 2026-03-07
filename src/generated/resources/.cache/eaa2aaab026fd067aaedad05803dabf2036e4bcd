@@ -1,0 +1,6 @@
+// 1.20.1	2026-03-07T11:50:17.404464748	Registrate Provider for gcyrextras [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+f44a505be07e2a0b66fc9e390dcb49cfafd10c18 assets/gcyrextras/blockstates/orbital_mining_laser.json
+3aa11767095d9fef6593022dd64cff93b2e47dde assets/gcyrextras/lang/en_ud.json
+7bb3179e3bad43f3300907c11d5ae8f401483f30 assets/gcyrextras/lang/en_us.json
+1a922bb485a38e7d291b71d33df8cf78935346e2 assets/gcyrextras/models/block/machine/orbital_mining_laser.json
+c892ef401ec4855cf0f4b050e60764eee8e838e7 assets/gcyrextras/models/item/orbital_mining_laser.json

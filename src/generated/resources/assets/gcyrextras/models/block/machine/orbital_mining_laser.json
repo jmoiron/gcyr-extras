@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:block/block",
+  "dynamic_renders": [
+    {
+      "type": "gcyrextras:orbital_mining_laser"
+    }
+  ],
+  "loader": "gtceu:machine",
+  "machine": "gcyrextras:orbital_mining_laser",
+  "texture_overrides": {
+    "all": "gcyrextras:block/casings/solid/beam_receiver"
+  },
+  "variants": {
+    "is_formed=false,recipe_logic_status=idle": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=suspend": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=waiting": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=working": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=idle": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=suspend": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=waiting": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=working": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/beam_receiver",
+          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+        }
+      }
+    }
+  }
+}

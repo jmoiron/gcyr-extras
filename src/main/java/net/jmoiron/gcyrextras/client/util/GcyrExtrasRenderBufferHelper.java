@@ -8,9 +8,34 @@ import org.joml.Matrix4f;
 
 public final class GcyrExtrasRenderBufferHelper {
 
-    private static final int TUBE_SIDES = 8;
+    private static final int TUBE_SIDES = 12;
 
     private GcyrExtrasRenderBufferHelper() {}
+
+    public static void renderFusionStyleBeam(PoseStack poseStack, VertexConsumer glowBuffer, VertexConsumer coreBuffer,
+                                             Vec3 start, Vec3 end, BeamProfile profile, BeamColors colors) {
+        renderBeamGlow(poseStack, glowBuffer, start, end, profile.glowRadius(), colors.glowColor());
+        renderBeamShell(poseStack, coreBuffer, start, end, profile.shellRadius(), colors.shellColor());
+        renderBeamCore(poseStack, coreBuffer, start, end, profile.haloRadius(), colors.haloColor());
+        renderBeamCore(poseStack, coreBuffer, start, end, profile.haloRadius(), colors.haloColor());
+        renderBeamCore(poseStack, coreBuffer, start, end, profile.coreRadius(), colors.coreColor());
+        renderBeamCore(poseStack, coreBuffer, start, end, profile.coreRadius(), colors.coreColor());
+    }
+
+    public static void renderBeamGlow(PoseStack poseStack, VertexConsumer buffer, Vec3 start, Vec3 end,
+                                      float radius, int color) {
+        renderTubeBeam(poseStack, buffer, start, end, radius, color);
+    }
+
+    public static void renderBeamShell(PoseStack poseStack, VertexConsumer buffer, Vec3 start, Vec3 end,
+                                       float radius, int color) {
+        renderTubeBeam(poseStack, buffer, start, end, radius, color);
+    }
+
+    public static void renderBeamCore(PoseStack poseStack, VertexConsumer buffer, Vec3 start, Vec3 end,
+                                      float radius, int color) {
+        renderTubeBeam(poseStack, buffer, start, end, radius, color);
+    }
 
     public static void renderTubeBeam(PoseStack poseStack, VertexConsumer buffer, Vec3 start, Vec3 end,
                                       float radius, int color) {
@@ -42,16 +67,14 @@ public final class GcyrExtrasRenderBufferHelper {
         }
     }
 
-    public static void renderVerticalBeam(PoseStack poseStack, VertexConsumer buffer, Vec3 start, Vec3 end,
-                                          float coreRadius, float glowRadius, int coreColor, int glowColor) {
-        renderTubeBeam(poseStack, buffer, start, end, glowRadius, glowColor);
-        renderTubeBeam(poseStack, buffer, start, end, coreRadius, coreColor);
-    }
-
     private static void vertex(VertexConsumer buffer, Matrix4f matrix, Vec3 pos, int color) {
         buffer.vertex(matrix, (float) pos.x, (float) pos.y, (float) pos.z)
                 .color(FastColor.ARGB32.red(color), FastColor.ARGB32.green(color),
                         FastColor.ARGB32.blue(color), FastColor.ARGB32.alpha(color))
                 .endVertex();
     }
+
+    public record BeamProfile(float glowRadius, float shellRadius, float haloRadius, float coreRadius) {}
+
+    public record BeamColors(int glowColor, int shellColor, int haloColor, int coreColor) {}
 }

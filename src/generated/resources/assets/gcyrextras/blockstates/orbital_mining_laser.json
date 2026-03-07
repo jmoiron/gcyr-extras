@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "gcyrextras:block/machine/orbital_mining_laser",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "gcyrextras:block/machine/orbital_mining_laser"
+    },
+    "facing=south": {
+      "model": "gcyrextras:block/machine/orbital_mining_laser",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gcyrextras:block/machine/orbital_mining_laser",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "block.gcyrextras.beam_former": "ɹǝɯɹoℲ ɯɐǝᗺ",
+  "block.gcyrextras.beam_receiver": "ɹǝʌıǝɔǝᴚ ɯɐǝᗺ",
+  "block.gcyrextras.cosmic_fuel_tank": "ʞuɐ⟘ ןǝnℲ ɔıɯsoƆ",
+  "block.gcyrextras.cosmic_rocket_motor": "ɹoʇoW ʇǝʞɔoᴚ ɔıɯsoƆ",
+  "block.gcyrextras.galactic_fuel_tank": "ʞuɐ⟘ ןǝnℲ ɔıʇɔɐןɐ⅁",
+  "block.gcyrextras.galactic_rocket_motor": "ɹoʇoW ʇǝʞɔoᴚ ɔıʇɔɐןɐ⅁",
+  "block.gcyrextras.orbital_mining_laser": "ɹǝsɐꞀ buıuıW ןɐʇıqɹO",
+  "block.gcyrextras.stellar_fuel_tank": "ʞuɐ⟘ ןǝnℲ ɹɐןןǝʇS",
+  "block.gcyrextras.stellar_rocket_motor": "ɹoʇoW ʇǝʞɔoᴚ ɹɐןןǝʇS",
+  "block.gcyrextras.universal_fuel_tank": "ʞuɐ⟘ ןǝnℲ ןɐsɹǝʌıu∩",
+  "block.gcyrextras.universal_rocket_motor": "ɹoʇoW ʇǝʞɔoᴚ ןɐsɹǝʌıu∩",
+  "tooltip.gcyrextras.motor.carry_weight": "%s :ʇɥbıǝM ʎɹɹɐƆ xɐW",
+  "tooltip.gcyrextras.motor.motor_count": "%s :ɹǝʍoԀ ɹǝʇsnɹɥ⟘",
+  "tooltip.gcyrextras.tank.fluid_capacity": "ᗺ %s :ʎʇıɔɐdɐƆ pınןℲ",
+  "tooltip.gcyrextras.tier": "%s :ɹǝı⟘"
+}

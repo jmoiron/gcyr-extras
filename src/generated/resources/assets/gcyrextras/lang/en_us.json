@@ -1,0 +1,17 @@
+{
+  "block.gcyrextras.beam_former": "Beam Former",
+  "block.gcyrextras.beam_receiver": "Beam Receiver",
+  "block.gcyrextras.cosmic_fuel_tank": "Cosmic Fuel Tank",
+  "block.gcyrextras.cosmic_rocket_motor": "Cosmic Rocket Motor",
+  "block.gcyrextras.galactic_fuel_tank": "Galactic Fuel Tank",
+  "block.gcyrextras.galactic_rocket_motor": "Galactic Rocket Motor",
+  "block.gcyrextras.orbital_mining_laser": "Orbital Mining Laser",
+  "block.gcyrextras.stellar_fuel_tank": "Stellar Fuel Tank",
+  "block.gcyrextras.stellar_rocket_motor": "Stellar Rocket Motor",
+  "block.gcyrextras.universal_fuel_tank": "Universal Fuel Tank",
+  "block.gcyrextras.universal_rocket_motor": "Universal Rocket Motor",
+  "tooltip.gcyrextras.motor.carry_weight": "Max Carry Weight: %s",
+  "tooltip.gcyrextras.motor.motor_count": "Thruster Power: %s",
+  "tooltip.gcyrextras.tank.fluid_capacity": "Fluid Capacity: %s B",
+  "tooltip.gcyrextras.tier": "Tier: %s"
+}
