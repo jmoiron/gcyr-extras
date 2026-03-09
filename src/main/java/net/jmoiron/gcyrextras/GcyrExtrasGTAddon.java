@@ -4,9 +4,12 @@ import argent_matter.gcyr.common.data.GCYRRecipeTypes;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import net.jmoiron.gcyrextras.common.data.GcyrExtrasRecipeTypes;
 import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.ModList;
@@ -32,6 +35,14 @@ public class GcyrExtrasGTAddon implements IGTAddon {
 
     @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
+        GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "cobblestone_probe"))
+                .circuitMeta(1)
+                .outputItems(new ItemStack(Blocks.COBBLESTONE))
+                .duration(20 * 30)
+                .EUt(28)
+                .save(provider);
+
         if (!ModList.get().isLoaded("gtnn")) return;
 
         addGtnnFuel(provider, "rp_1_mixed_fuel",                    100);

@@ -2,9 +2,11 @@ package net.jmoiron.gcyrextras;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasBlocks;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasMachines;
+import net.jmoiron.gcyrextras.common.data.GcyrExtrasRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -28,6 +30,7 @@ public class GcyrExtras {
         GcyrExtrasRegistries.REGISTRATE.registerRegistrate();
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
                 () -> () -> net.jmoiron.gcyrextras.forge.GcyrExtrasForgeClientEvents.registerDynamicRenders());
+        bus.addGenericListener(GTRecipeType.class, this::registerRecipeTypes);
         bus.addGenericListener(MachineDefinition.class, this::registerMachines);
         bus.addListener(this::commonSetup);
     }
@@ -38,5 +41,9 @@ public class GcyrExtras {
 
     public void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         GcyrExtrasMachines.init();
+    }
+
+    public void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
+        GcyrExtrasRecipeTypes.init();
     }
 }

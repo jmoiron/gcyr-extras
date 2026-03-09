@@ -39,7 +39,7 @@ public final class GcyrExtrasMachines {
             .rotationState(RotationState.NON_Y_AXIS)
             .allowFlip(false)
             .allowExtendedFacing(false)
-            .recipeType(com.gregtechceu.gtceu.common.data.GTRecipeTypes.DUMMY_RECIPES)
+            .recipeType(GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES)
             .appearanceBlock(() -> CASING_TUNGSTENSTEEL_ROBUST.get())
             .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
             .pattern(def -> FactoryBlockPattern.start()

@@ -49,31 +49,33 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
 
     @Override
     public boolean shouldRender(OrbitalMiningLaserMachine machine, Vec3 cameraPos) {
-        return machine.isFormed() || delta > 0;
+        return machine.recipeLogic.isWorking() || delta > 0;
     }
 
     @Override
     public void render(OrbitalMiningLaserMachine machine, float partialTick, PoseStack poseStack,
                        MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        if (!machine.isFormed() && delta <= 0) {
+        if (!machine.recipeLogic.isWorking() && delta <= 0) {
             return;
         }
 
         if (GTCEu.Mods.isShimmerLoaded()) {
-            BloomUtils.entityBloom(source -> renderBeams(machine, partialTick, poseStack, source));
+            BloomUtils.entityBloom(source -> renderEffects(machine, partialTick, poseStack, source));
         } else {
-            renderBeams(machine, partialTick, poseStack, buffer);
+            renderEffects(machine, partialTick, poseStack, buffer);
         }
     }
 
-    private void renderBeams(OrbitalMiningLaserMachine machine, float partialTick, PoseStack poseStack,
-                             MultiBufferSource buffer) {
+    private void renderEffects(OrbitalMiningLaserMachine machine, float partialTick, PoseStack poseStack,
+                               MultiBufferSource buffer) {
         BeamColors colors = beamColors(machine, partialTick);
         VertexConsumer glow = buffer.getBuffer(GcyrExtrasRenderTypes.laserGlow());
         VertexConsumer core = buffer.getBuffer(GcyrExtrasRenderTypes.laserCore());
 
-        BeamProfile horizontal = new BeamProfile(0.44f, 0.32f, 0.24f, 0.16f);
-        BeamProfile vertical = new BeamProfile(0.54f, 0.38f, 0.30f, 0.22f);
+        BeamProfile horizontal = new BeamProfile(0.33f, 0.24f, 0.18f, 0.12f);
+        BeamProfile vertical = new BeamProfile(0.50f, 0.36f, 0.28f, 0.20f);
+        BeamProfile torus = new BeamProfile(0.15f, 0.11f, 0.08f, 0.055f);
+        BeamProfile sourceSphere = new BeamProfile(0.625f, 0.475f, 0.375f, 0.275f);
 
         GcyrExtrasRenderBufferHelper.renderFusionStyleBeam(poseStack, glow, core,
                 patternPoint(machine, 7, 3, 5), patternPoint(machine, 7, 3, 2), horizontal, colors);
@@ -84,16 +86,22 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
         GcyrExtrasRenderBufferHelper.renderFusionStyleBeam(poseStack, glow, core,
                 patternPoint(machine, 9, 3, 7), patternPoint(machine, 12, 3, 7), horizontal, colors);
 
-        Vec3 start = patternPoint(machine, 7, 0, 7);
+        Vec3 ringCenter = patternPoint(machine, 7, 3, 7);
+        Vec3 ringAxis = directionVector(RelativeDirection.UP.getRelative(
+                machine.getFrontFacing(), machine.getUpwardsFacing(), machine.isFlipped()));
+        GcyrExtrasRenderBufferHelper.renderFusionStyleTorus(poseStack, glow, core, ringCenter, ringAxis, 1.25f, torus, colors);
+
+        Vec3 start = patternPoint(machine, 7, 3, 7);
         double endY = findVerticalBeamEndY(machine);
         Vec3 end = new Vec3(start.x, endY, start.z);
         GcyrExtrasRenderBufferHelper.renderFusionStyleBeam(poseStack, glow, core, start, end, vertical, colors);
+        GcyrExtrasRenderBufferHelper.renderFusionStyleSphere(poseStack, glow, core, start, sourceSphere, colors);
     }
 
     private BeamColors beamColors(OrbitalMiningLaserMachine machine, float partialTick) {
-        int baseColor = machine.isFormed() ? OrbitalMiningLaserMachine.DEFAULT_BEAM_COLOR : lastColor;
+        int baseColor = machine.recipeLogic.isWorking() ? OrbitalMiningLaserMachine.DEFAULT_BEAM_COLOR : lastColor;
         float fadeAlpha = 1.0f;
-        if (machine.isFormed()) {
+        if (machine.recipeLogic.isWorking()) {
             lastColor = OrbitalMiningLaserMachine.DEFAULT_BEAM_COLOR;
             delta = FADEOUT;
         } else {
@@ -101,17 +109,11 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
             delta = Math.max(0.0f, delta - Minecraft.getInstance().getDeltaFrameTime());
         }
 
-        float lerpFactor = Math.abs((Math.abs(machine.getOffsetTimer() % 50) + partialTick) - 25.0f) / 25.0f;
-        int pulseR = Mth.floor(Mth.lerp(lerpFactor, red(baseColor), 255));
-        int pulseG = Mth.floor(Mth.lerp(lerpFactor, green(baseColor), 255));
-        int pulseB = Mth.floor(Mth.lerp(lerpFactor, blue(baseColor), 255));
-        int pulseA = Mth.floor(255 * fadeAlpha);
-
         int glowColor = color(Mth.floor(0x88 * fadeAlpha), red(baseColor), green(baseColor), blue(baseColor));
-        int shellColor = color(Mth.floor(0xF0 * fadeAlpha), pulseR, pulseG, pulseB);
+        int shellColor = color(Mth.floor(0xF0 * fadeAlpha), 255, 255, 255);
         int haloColor = color(Mth.floor(0xFF * fadeAlpha), 255, 255, 255);
-        int coreColor = color(pulseA, 255, 255, 255);
-        lastColor = color(alpha(shellColor), pulseR, pulseG, pulseB);
+        int coreColor = color(Mth.floor(255 * fadeAlpha), 255, 255, 255);
+        lastColor = color(alpha(glowColor), red(baseColor), green(baseColor), blue(baseColor));
         return new BeamColors(glowColor, shellColor, haloColor, coreColor);
     }
 
@@ -121,7 +123,7 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
             return patternPoint(machine, 7, -12, 7).y;
         }
 
-        BlockPos emitterPos = patternBlockPos(machine, 7, 0, 7);
+        BlockPos emitterPos = patternBlockPos(machine, 7, 3, 7);
         int minY = level.getMinBuildHeight();
 
         for (int y = emitterPos.getY() - 1; y >= minY; y--) {
@@ -133,6 +135,10 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
         }
 
         return minY - machine.getPos().getY();
+    }
+
+    private static Vec3 directionVector(net.minecraft.core.Direction direction) {
+        return new Vec3(direction.getStepX(), direction.getStepY(), direction.getStepZ());
     }
 
     private static BlockPos patternBlockPos(OrbitalMiningLaserMachine machine, int patternX, int patternY, int patternZ) {
@@ -166,7 +172,7 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
 
     @Override
     public boolean shouldRenderOffScreen(OrbitalMiningLaserMachine machine) {
-        return machine.isFormed() || delta > 0;
+        return machine.recipeLogic.isWorking() || delta > 0;
     }
 
     @Override
