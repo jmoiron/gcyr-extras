@@ -28,6 +28,9 @@ import static net.minecraft.util.FastColor.ARGB32.color;
 import static net.minecraft.util.FastColor.ARGB32.green;
 import static net.minecraft.util.FastColor.ARGB32.red;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMachine, OrbitalMiningLaserRender> {
 
     public static final Codec<OrbitalMiningLaserRender> CODEC = Codec.unit(OrbitalMiningLaserRender::new);
@@ -37,10 +40,9 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
     private static final int CONTROLLER_X = 7;
     private static final int CONTROLLER_Y = 3;
     private static final int CONTROLLER_Z = 0;
-    private static final float FADEOUT = 30.0f;
+    private static final long BEAM_SCAN_INTERVAL_TICKS = 5L;
 
-    private float delta;
-    private int lastColor = OrbitalMiningLaserMachine.DEFAULT_BEAM_COLOR;
+    private final Map<Long, BeamEndCache> verticalBeamCache = new HashMap<>();
 
     @Override
     public DynamicRenderType<OrbitalMiningLaserMachine, OrbitalMiningLaserRender> getType() {
@@ -49,13 +51,13 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
 
     @Override
     public boolean shouldRender(OrbitalMiningLaserMachine machine, Vec3 cameraPos) {
-        return machine.recipeLogic.isWorking() || delta > 0;
+        return isLaserActive(machine);
     }
 
     @Override
     public void render(OrbitalMiningLaserMachine machine, float partialTick, PoseStack poseStack,
                        MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        if (!machine.recipeLogic.isWorking() && delta <= 0) {
+        if (!isLaserActive(machine)) {
             return;
         }
 
@@ -99,54 +101,72 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
     }
 
     private BeamColors beamColors(OrbitalMiningLaserMachine machine, float partialTick) {
-        int baseColor = machine.recipeLogic.isWorking() ? OrbitalMiningLaserMachine.DEFAULT_BEAM_COLOR : lastColor;
         float fadeAlpha = 1.0f;
-        if (machine.recipeLogic.isWorking()) {
-            lastColor = OrbitalMiningLaserMachine.DEFAULT_BEAM_COLOR;
-            delta = FADEOUT;
-        } else {
-            fadeAlpha = delta / FADEOUT;
-            delta = Math.max(0.0f, delta - Minecraft.getInstance().getDeltaFrameTime());
-        }
-
+        int baseColor = OrbitalMiningLaserMachine.DEFAULT_BEAM_COLOR;
         int glowColor = color(Mth.floor(0x88 * fadeAlpha), red(baseColor), green(baseColor), blue(baseColor));
         int shellColor = color(Mth.floor(0xF0 * fadeAlpha), 255, 255, 255);
         int haloColor = color(Mth.floor(0xFF * fadeAlpha), 255, 255, 255);
         int coreColor = color(Mth.floor(255 * fadeAlpha), 255, 255, 255);
-        lastColor = color(alpha(glowColor), red(baseColor), green(baseColor), blue(baseColor));
         return new BeamColors(glowColor, shellColor, haloColor, coreColor);
     }
 
-    private static double findVerticalBeamEndY(OrbitalMiningLaserMachine machine) {
+    private double findVerticalBeamEndY(OrbitalMiningLaserMachine machine) {
         Level level = machine.getLevel();
         if (level == null) {
             return patternPoint(machine, 7, -12, 7).y;
         }
 
-        BlockPos emitterPos = patternBlockPos(machine, 7, 3, 7);
+        long machineKey = machine.getPos().asLong();
+        long gameTime = level.getGameTime();
+        BeamEndCache cached = verticalBeamCache.get(machineKey);
+        if (cached != null && gameTime < cached.nextRefreshTick()) {
+            return cached.endY();
+        }
+
+        BlockPos bottomGlassPos = relativeBlockPos(machine, 0, -3, 7);
         int minY = level.getMinBuildHeight();
 
-        for (int y = emitterPos.getY() - 1; y >= minY; y--) {
-            BlockPos checkPos = new BlockPos(emitterPos.getX(), y, emitterPos.getZ());
+        for (int y = bottomGlassPos.getY() - 1; y >= minY; y--) {
+            BlockPos checkPos = new BlockPos(bottomGlassPos.getX(), y, bottomGlassPos.getZ());
             BlockState state = level.getBlockState(checkPos);
-            if (!state.isAir() && (state.canOcclude() || state.blocksMotion())) {
-                return y + 1.0 - machine.getPos().getY();
+            if (blocksVerticalBeam(level, checkPos, state)) {
+                double endY = y + 1.0 - machine.getPos().getY();
+                verticalBeamCache.put(machineKey, new BeamEndCache(endY, gameTime + BEAM_SCAN_INTERVAL_TICKS));
+                return endY;
             }
         }
 
-        return minY - machine.getPos().getY();
+        double endY = minY - machine.getPos().getY();
+        verticalBeamCache.put(machineKey, new BeamEndCache(endY, gameTime + BEAM_SCAN_INTERVAL_TICKS));
+        return endY;
+    }
+
+    private static boolean blocksVerticalBeam(Level level, BlockPos pos, BlockState state) {
+        if (state.isAir()) {
+            return false;
+        }
+        if (state.getFluidState().isSource()) {
+            return false;
+        }
+        return state.isSolidRender(level, pos) && state.getLightBlock(level, pos) >= 15;
     }
 
     private static Vec3 directionVector(net.minecraft.core.Direction direction) {
         return new Vec3(direction.getStepX(), direction.getStepY(), direction.getStepZ());
     }
 
-    private static BlockPos patternBlockPos(OrbitalMiningLaserMachine machine, int patternX, int patternY, int patternZ) {
-        int upOffset = patternY - CONTROLLER_Y;
-        int leftOffset = patternX - CONTROLLER_X;
-        int forwardOffset = patternZ - CONTROLLER_Z;
-        return RelativeDirection.offsetPos(machine.getPos(), machine.getFrontFacing(), machine.getUpwardsFacing(),
-                machine.isFlipped(), upOffset, leftOffset, forwardOffset);
+    private static BlockPos relativeBlockPos(OrbitalMiningLaserMachine machine, int right, int up, int back) {
+        var front = machine.getFrontFacing();
+        var upwards = machine.getUpwardsFacing();
+        var flipped = machine.isFlipped();
+        var rightDir = RelativeDirection.RIGHT.getRelative(front, upwards, flipped);
+        var upDir = RelativeDirection.UP.getRelative(front, upwards, flipped);
+        var backDir = RelativeDirection.BACK.getRelative(front, upwards, flipped);
+
+        return machine.getPos()
+                .relative(rightDir, right)
+                .relative(upDir, up)
+                .relative(backDir, back);
     }
 
     private static Vec3 patternPoint(OrbitalMiningLaserMachine machine, double patternX, double patternY, double patternZ) {
@@ -172,7 +192,7 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
 
     @Override
     public boolean shouldRenderOffScreen(OrbitalMiningLaserMachine machine) {
-        return machine.recipeLogic.isWorking() || delta > 0;
+        return isLaserActive(machine);
     }
 
     @Override
@@ -184,4 +204,10 @@ public class OrbitalMiningLaserRender extends DynamicRender<OrbitalMiningLaserMa
     public AABB getRenderBoundingBox(OrbitalMiningLaserMachine machine) {
         return new AABB(machine.getPos()).inflate(16.0, 64.0, 16.0);
     }
+
+    private static boolean isLaserActive(OrbitalMiningLaserMachine machine) {
+        return machine.isFormed() && machine.recipeLogic.isWorking() && machine.recipeLogic.getLastRecipe() != null;
+    }
+
+    private record BeamEndCache(double endY, long nextRefreshTick) {}
 }
