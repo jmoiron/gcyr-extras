@@ -8,78 +8,86 @@
   "loader": "gtceu:machine",
   "machine": "gcyrextras:orbital_mining_laser",
   "texture_overrides": {
-    "all": "gcyrextras:block/casings/solid/beam_receiver"
+    "all": "gcyrextras:block/casings/solid/mining_laser_casing"
   },
   "variants": {
     "is_formed=false,recipe_logic_status=idle": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_emissive"
         }
       }
     },
     "is_formed=false,recipe_logic_status=suspend": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_emissive"
         }
       }
     },
     "is_formed=false,recipe_logic_status=waiting": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_active_emissive"
         }
       }
     },
     "is_formed=false,recipe_logic_status=working": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_active_emissive"
         }
       }
     },
     "is_formed=true,recipe_logic_status=idle": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_emissive"
         }
       }
     },
     "is_formed=true,recipe_logic_status=suspend": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_emissive"
         }
       }
     },
     "is_formed=true,recipe_logic_status=waiting": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_active_emissive"
         }
       }
     },
     "is_formed=true,recipe_logic_status=working": {
       "model": {
-        "parent": "gcyrextras:block/machine/template/cube_all/sided_front",
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
         "textures": {
-          "all": "gcyrextras:block/casings/solid/beam_receiver",
-          "front": "gcyrextras:block/casings/solid/orbital_mining_laser_front"
+          "all": "gcyrextras:block/casings/solid/mining_laser_casing",
+          "overlay_front": "gcyrextras:block/machines/laser_engraver/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/laser_engraver/overlay_front_active_emissive"
         }
       }
     }

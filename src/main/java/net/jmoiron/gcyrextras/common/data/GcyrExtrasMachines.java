@@ -25,7 +25,6 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.autoAbilities;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.blocks;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.controller;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.CASING_LAMINATED_GLASS;
-import static com.gregtechceu.gtceu.common.data.GTBlocks.CASING_TUNGSTENSTEEL_ROBUST;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_HIGH_TEMPERATURE_SMELTING;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_LASER_SAFE_ENGRAVING;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_VIBRATION_SAFE;
@@ -40,7 +39,7 @@ public final class GcyrExtrasMachines {
             .allowFlip(false)
             .allowExtendedFacing(false)
             .recipeType(GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES)
-            .appearanceBlock(() -> CASING_TUNGSTENSTEEL_ROBUST.get())
+            .appearanceBlock(() -> GcyrExtrasBlocks.MINING_LASER_CASING.get())
             .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
             .pattern(def -> FactoryBlockPattern.start()
                     .aisle("               ", "               ", "               ", "      bbb      ", "               ", "               ", "               ")
@@ -59,7 +58,7 @@ public final class GcyrExtrasMachines {
                     .aisle("               ", "               ", "      bbb      ", "    bb   bb    ", "      bbb      ", "               ", "               ")
                     .aisle("               ", "               ", "               ", "      bkb      ", "               ", "               ", "               ")
                     .where('k', controller(blocks(def.getBlock())))
-                    .where('b', blocks(CASING_TUNGSTENSTEEL_ROBUST.get()).setMinGlobalLimited(24)
+                    .where('b', blocks(GcyrExtrasBlocks.MINING_LASER_CASING.get()).setMinGlobalLimited(24)
                             .or(autoAbilities(def.getRecipeTypes()))
                             .or(autoAbilities(true, false, true)))
                     .where('d', blocks(CASING_LASER_SAFE_ENGRAVING.get()))
@@ -72,9 +71,8 @@ public final class GcyrExtrasMachines {
                     .where(' ', any())
                     .build())
             .model(createLocalWorkableCasingMachineModel(
-                            GcyrExtras.id("block/casings/solid/beam_receiver"),
-                            GcyrExtras.id("block/casings/solid/orbital_mining_laser_front"),
-                            GTCEu.id("block/multiblock/assembly_line"))
+                            GcyrExtras.id("block/casings/solid/mining_laser_casing"),
+                            GcyrExtras.id("block/machines/laser_engraver"))
                     .andThen(b -> b.addDynamicRenderer(GcyrExtrasDynamicRenderHelper::createOrbitalMiningLaserRender)))
             .hasBER(true)
             .register();
@@ -84,20 +82,32 @@ public final class GcyrExtrasMachines {
     public static void init() {}
 
     private static MachineBuilder.ModelInitializer createLocalWorkableCasingMachineModel(ResourceLocation baseCasingTexture,
-                                                                                         ResourceLocation frontCasingTexture,
                                                                                          ResourceLocation overlayDir) {
         return (DataGenContext<Block, ? extends Block> ctx, GTBlockstateProvider prov, MachineModelBuilder<BlockModelBuilder> builder) -> {
-            WorkableOverlays overlays = WorkableOverlays.get(overlayDir, prov.getExistingFileHelper());
-
             builder.forAllStates(state -> {
                 RecipeLogic.Status status = state.getValue(GTMachineModelProperties.RECIPE_LOGIC_STATUS);
                 var model = prov.models().nested()
-                        .parent(prov.models().getExistingFile(GcyrExtras.id("block/machine/template/cube_all/sided_front")))
-                        .texture("all", baseCasingTexture)
-                        .texture("front", frontCasingTexture);
-                return GTMachineModels.addWorkableOverlays(overlays, status, model);
+                        .parent(prov.models().getExistingFile(GcyrExtras.id("block/machine/template/cube_all/sided")))
+                        .texture("all", baseCasingTexture);
+                addLaserEngraverFrontOverlay(model, overlayDir, status);
+                return new net.minecraftforge.client.model.generators.ConfiguredModel[] {
+                        new net.minecraftforge.client.model.generators.ConfiguredModel(model)
+                };
             });
             builder.addTextureOverride("all", baseCasingTexture);
         };
+    }
+
+    private static void addLaserEngraverFrontOverlay(BlockModelBuilder model, ResourceLocation overlayDir,
+                                                     RecipeLogic.Status status) {
+        ResourceLocation front = overlayDir.withSuffix("/overlay_front");
+        ResourceLocation frontEmissive = overlayDir.withSuffix("/overlay_front_emissive");
+        if (status == RecipeLogic.Status.WORKING || status == RecipeLogic.Status.WAITING) {
+            model.texture("overlay_front", overlayDir.withSuffix("/overlay_front_active"));
+            model.texture("overlay_front_emissive", overlayDir.withSuffix("/overlay_front_active_emissive"));
+            return;
+        }
+        model.texture("overlay_front", front);
+        model.texture("overlay_front_emissive", frontEmissive);
     }
 }

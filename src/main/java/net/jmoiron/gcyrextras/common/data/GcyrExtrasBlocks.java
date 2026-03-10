@@ -36,6 +36,7 @@ public class GcyrExtrasBlocks {
             new EnumMap<>(ExtraFuelTankProperties.class);
     public static final RegistryObject<Block> BEAM_RECEIVER = registerSimpleBlock("beam_receiver");
     public static final RegistryObject<Block> BEAM_FORMER = registerSimpleBlock("beam_former");
+    public static final RegistryObject<Block> MINING_LASER_CASING = registerSimpleBlock("mining_laser_casing");
 
     static {
         for (ExtraRocketMotorType type : ExtraRocketMotorType.values()) {

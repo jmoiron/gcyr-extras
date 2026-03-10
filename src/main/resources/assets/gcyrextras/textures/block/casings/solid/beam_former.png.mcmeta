@@ -1,5 +1,5 @@
 {
-  "ctm": {
+  "ldlib": {
     "connection": "gcyrextras:block/casings/solid/beam_former_ctm"
   }
 }
