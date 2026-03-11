@@ -19,6 +19,7 @@ public final class GcyrExtrasLang {
         provider.add("block.gcyrextras.beam_receiver", "Beam Receiver");
         provider.add("block.gcyrextras.beam_former", "Beam Former");
         provider.add("block.gcyrextras.mining_laser_casing", "Mining Laser Casing");
+        provider.add("block.gcyrextras.gas_miner_casing", "Gas Miner Casing");
 
         provider.add("tooltip.gcyrextras.tier", "Tier: %s");
         provider.add("tooltip.gcyrextras.motor.carry_weight", "Max Carry Weight: %s");

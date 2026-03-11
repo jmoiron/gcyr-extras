@@ -1,0 +1,90 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "gcyrextras:orbital_gas_miner",
+  "texture_overrides": {
+    "all": "gcyrextras:block/casings/solid/gas_miner_casing"
+  },
+  "variants": {
+    "is_formed=false,recipe_logic_status=idle": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=suspend": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=waiting": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_active_emissive"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=working": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_active_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=idle": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=suspend": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=waiting": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_active_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=working": {
+      "model": {
+        "parent": "gcyrextras:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "gcyrextras:block/casings/solid/gas_miner_casing",
+          "overlay_front": "gcyrextras:block/machines/centrifuge/overlay_front_active",
+          "overlay_front_emissive": "gcyrextras:block/machines/centrifuge/overlay_front_active_emissive"
+        }
+      }
+    }
+  }
+}

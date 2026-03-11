@@ -16,11 +16,18 @@ import static com.lowdragmc.lowdraglib.gui.texture.ProgressTexture.FillDirection
 public final class GcyrExtrasRecipeTypes {
 
     public static final GTRecipeType ORBITAL_MINER_RECIPES = register("orbital_miner", MULTIBLOCK)
-            .setMaxIOSize(1, 1, 0, 0)
+            .setMaxIOSize(1, 1, 1, 0)
             .setEUIO(IO.IN)
             .setSlotOverlay(false, false, true, GuiTextures.INT_CIRCUIT_OVERLAY)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, LEFT_TO_RIGHT)
             .setSound(GTSoundEntries.PORTABLE_SCANNER);
+
+    public static final GTRecipeType ORBITAL_GAS_MINER_RECIPES = register("orbital_gas_miner", MULTIBLOCK)
+            .setMaxIOSize(1, 0, 1, 7)
+            .setEUIO(IO.IN)
+            .setSlotOverlay(false, false, true, GuiTextures.INT_CIRCUIT_OVERLAY)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, LEFT_TO_RIGHT)
+            .setSound(GTSoundEntries.CENTRIFUGE);
 
     private GcyrExtrasRecipeTypes() {}
 

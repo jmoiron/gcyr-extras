@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gcyrextras:block/gas_miner_casing"
+    }
+  }
+}

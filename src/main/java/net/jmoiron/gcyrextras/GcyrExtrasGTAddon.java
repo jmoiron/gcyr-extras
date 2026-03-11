@@ -1,14 +1,17 @@
 package net.jmoiron.gcyrextras;
 
 import argent_matter.gcyr.common.data.GCYRRecipeTypes;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasRecipeTypes;
 import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
@@ -41,6 +44,15 @@ public class GcyrExtrasGTAddon implements IGTAddon {
                 .outputItems(new ItemStack(Blocks.COBBLESTONE))
                 .duration(20 * 30)
                 .EUt(28)
+                .save(provider);
+
+        GcyrExtrasRecipeTypes.ORBITAL_GAS_MINER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "overworld_air_scoop"))
+                .circuitMeta(1)
+                .outputFluids(GTMaterials.Air.getFluid(100_000))
+                .dimension(Level.OVERWORLD)
+                .duration(20 * 30)
+                .EUt(GTValues.VA[GTValues.IV])
                 .save(provider);
 
         if (!ModList.get().isLoaded("gtnn")) return;

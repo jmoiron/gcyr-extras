@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "gcyrextras:block/casings/solid/gas_miner_casing"
+  }
+}
