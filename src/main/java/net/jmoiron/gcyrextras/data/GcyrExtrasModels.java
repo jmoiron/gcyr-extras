@@ -16,10 +16,14 @@ public final class GcyrExtrasModels {
         prov.simpleBlock(GcyrExtrasBlocks.GAS_MINER_CASING.get(),
                 prov.models().cubeAll("gas_miner_casing",
                         GcyrExtras.id("block/casings/solid/gas_miner_casing")));
+        prov.simpleBlock(GcyrExtrasBlocks.VACUUM_COUPLING_CASING.get(),
+                prov.models().cubeAll("vacuum_coupling_casing",
+                        GcyrExtras.id("block/casings/gcym/vacuum_coupling_casing")));
     }
 
     public static void initItemModels(RegistrateItemModelProvider prov) {
         prov.withExistingParent("mining_laser_casing", prov.modLoc("block/mining_laser_casing"));
         prov.withExistingParent("gas_miner_casing", prov.modLoc("block/gas_miner_casing"));
+        prov.withExistingParent("vacuum_coupling_casing", prov.modLoc("block/vacuum_coupling_casing"));
     }
 }

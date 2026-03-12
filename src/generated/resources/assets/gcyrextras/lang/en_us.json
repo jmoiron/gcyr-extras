@@ -13,6 +13,7 @@
   "block.gcyrextras.stellar_rocket_motor": "Stellar Rocket Motor",
   "block.gcyrextras.universal_fuel_tank": "Universal Fuel Tank",
   "block.gcyrextras.universal_rocket_motor": "Universal Rocket Motor",
+  "block.gcyrextras.vacuum_coupling_casing": "Vacuum Coupling Casing",
   "tooltip.gcyrextras.motor.carry_weight": "Max Carry Weight: %s",
   "tooltip.gcyrextras.motor.motor_count": "Thruster Power: %s",
   "tooltip.gcyrextras.tank.fluid_capacity": "Fluid Capacity: %s B",

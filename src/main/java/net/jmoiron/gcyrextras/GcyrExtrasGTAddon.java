@@ -4,10 +4,15 @@ import argent_matter.gcyr.common.data.GCYRRecipeTypes;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
+import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
+import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
+import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasRecipeTypes;
 import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
+import net.jmoiron.gcyrextras.common.data.GcyrExtrasBlocks;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -38,6 +43,57 @@ public class GcyrExtrasGTAddon implements IGTAddon {
 
     @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
+        VanillaRecipeHelper.addShapedRecipe(provider, true,
+                ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "mining_laser_casing"),
+                new ItemStack(GcyrExtrasBlocks.MINING_LASER_CASING.get(), 2),
+                "PhP", "PFP", "PwP",
+                'P', new MaterialEntry(TagPrefix.plate, GTMaterials.TitaniumCarbide),
+                'F', new MaterialEntry(TagPrefix.frameGt, GTMaterials.TitaniumCarbide));
+
+        GTRecipeTypes.ASSEMBLER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "mining_laser_casing"))
+                .inputItems(TagPrefix.plate, GTMaterials.TitaniumCarbide, 6)
+                .inputItems(TagPrefix.frameGt, GTMaterials.TitaniumCarbide)
+                .circuitMeta(6)
+                .outputItems(new ItemStack(GcyrExtrasBlocks.MINING_LASER_CASING.get(), 2))
+                .duration(50)
+                .EUt(16)
+                .save(provider);
+
+        VanillaRecipeHelper.addShapedRecipe(provider, true,
+                ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "gas_miner_casing"),
+                new ItemStack(GcyrExtrasBlocks.GAS_MINER_CASING.get(), 2),
+                "PhP", "PFP", "PwP",
+                'P', new MaterialEntry(TagPrefix.plateDouble, GTMaterials.Invar),
+                'F', new MaterialEntry(TagPrefix.frameGt, GTMaterials.TungstenCarbide));
+
+        GTRecipeTypes.ASSEMBLER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "gas_miner_casing"))
+                .inputItems(TagPrefix.plateDouble, GTMaterials.Invar, 6)
+                .inputItems(TagPrefix.frameGt, GTMaterials.TungstenCarbide)
+                .circuitMeta(6)
+                .outputItems(new ItemStack(GcyrExtrasBlocks.GAS_MINER_CASING.get(), 2))
+                .duration(50)
+                .EUt(16)
+                .save(provider);
+
+        VanillaRecipeHelper.addShapedRecipe(provider, true,
+                ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "vacuum_coupling_casing"),
+                new ItemStack(GcyrExtrasBlocks.VACUUM_COUPLING_CASING.get(), 2),
+                "PhP", "PFP", "PwP",
+                'P', new MaterialEntry(TagPrefix.plate, GTMaterials.Brass),
+                'F', new MaterialEntry(TagPrefix.frameGt, GTMaterials.HSLASteel));
+
+        GTRecipeTypes.ASSEMBLER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "vacuum_coupling_casing"))
+                .inputItems(TagPrefix.plate, GTMaterials.Brass, 6)
+                .inputItems(TagPrefix.frameGt, GTMaterials.HSLASteel)
+                .circuitMeta(6)
+                .outputItems(new ItemStack(GcyrExtrasBlocks.VACUUM_COUPLING_CASING.get(), 2))
+                .duration(50)
+                .EUt(16)
+                .save(provider);
+
         GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES
                 .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "cobblestone_probe"))
                 .circuitMeta(1)

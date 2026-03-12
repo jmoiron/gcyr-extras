@@ -27,16 +27,18 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.any;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.autoAbilities;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.blocks;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.controller;
+import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.BATCH_MODE;
+import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.OC_NON_PERFECT_SUBTICK;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.CASING_STAINLESS_CLEAN;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.COMPUTER_HEAT_VENT;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.FIREBOX_TUNGSTENSTEEL;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.CASING_LAMINATED_GLASS;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_HIGH_TEMPERATURE_SMELTING;
-import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_INDUSTRIAL_STEAM;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_LASER_SAFE_ENGRAVING;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_VIBRATION_SAFE;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.HEAT_VENT;
+import static com.gregtechceu.gtceu.common.data.GTRecipeModifiers.PARALLEL_HATCH;
 
 public final class GcyrExtrasMachines {
 
@@ -47,6 +49,7 @@ public final class GcyrExtrasMachines {
             .allowFlip(false)
             .allowExtendedFacing(false)
             .recipeType(GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES)
+            .recipeModifiers(PARALLEL_HATCH, OC_NON_PERFECT_SUBTICK, BATCH_MODE)
             .appearanceBlock(() -> GcyrExtrasBlocks.MINING_LASER_CASING.get())
             .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
             .pattern(def -> FactoryBlockPattern.start()
@@ -122,7 +125,7 @@ public final class GcyrExtrasMachines {
                     //.where("i", Predicates.blocks("gtceu:heatproof_machine_casing"))
                     .where('j', blocks(CASING_HIGH_TEMPERATURE_SMELTING.get()))
                     .where('k', controller(blocks(def.getBlock())))
-                    .where('l', blocks(CASING_INDUSTRIAL_STEAM.get()))
+                    .where('l', blocks(GcyrExtrasBlocks.VACUUM_COUPLING_CASING.get()))
                     .where('m', blocks(HEAT_VENT.get()))
                     .where('o', abilities(PartAbility.MUFFLER).setMinGlobalLimited(1).setMaxGlobalLimited(1))
                     // Placeholder pattern. Replace these aisles with the real orbital gas miner structure.

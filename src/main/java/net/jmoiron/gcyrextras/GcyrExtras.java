@@ -1,10 +1,12 @@
 package net.jmoiron.gcyrextras;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasBlocks;
+import net.jmoiron.gcyrextras.common.data.GcyrExtrasMaterials;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasMachines;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -32,6 +34,7 @@ public class GcyrExtras {
                 () -> () -> net.jmoiron.gcyrextras.forge.GcyrExtrasForgeClientEvents.registerDynamicRenders());
         bus.addGenericListener(GTRecipeType.class, this::registerRecipeTypes);
         bus.addGenericListener(MachineDefinition.class, this::registerMachines);
+        bus.addListener(this::modifyMaterials);
         bus.addListener(this::commonSetup);
     }
 
@@ -45,5 +48,9 @@ public class GcyrExtras {
 
     public void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
         GcyrExtrasRecipeTypes.init();
+    }
+
+    public void modifyMaterials(PostMaterialEvent event) {
+        GcyrExtrasMaterials.modifyMaterials();
     }
 }

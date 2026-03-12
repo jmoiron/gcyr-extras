@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "gcyrextras:block/casings/gcym/vacuum_coupling_casing"
+  }
+}
