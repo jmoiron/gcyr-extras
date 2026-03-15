@@ -42,6 +42,7 @@ public class GcyrExtrasBlocks {
 
     static {
         for (ExtraRocketMotorType type : ExtraRocketMotorType.values()) {
+            // TODO: add crafting/assembler recipes for each extra rocket motor tier.
             RegistryObject<RocketMotorBlock> block = BLOCKS.register(
                     type.getSerializedName() + "_rocket_motor",
                     () -> new RocketMotorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK), type));
@@ -51,6 +52,7 @@ public class GcyrExtrasBlocks {
         }
 
         for (ExtraFuelTankProperties props : ExtraFuelTankProperties.values()) {
+            // TODO: add crafting/assembler recipes for each extra fuel tank tier.
             RegistryObject<FuelTankBlock> block = BLOCKS.register(
                     props.getSerializedName() + "_fuel_tank",
                     () -> new FuelTankBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK), props));

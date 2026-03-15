@@ -1,18 +1,23 @@
 package net.jmoiron.gcyrextras;
 
 import argent_matter.gcyr.common.data.GCYRRecipeTypes;
+import argent_matter.gcyr.common.data.GCYRMaterials;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
+import com.gregtechceu.gtceu.common.data.machines.GTMultiMachines;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasRecipeTypes;
 import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasBlocks;
+import net.jmoiron.gcyrextras.common.data.GcyrExtrasMachines;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -92,6 +97,80 @@ public class GcyrExtrasGTAddon implements IGTAddon {
                 .outputItems(new ItemStack(GcyrExtrasBlocks.VACUUM_COUPLING_CASING.get(), 2))
                 .duration(50)
                 .EUt(16)
+                .save(provider);
+
+        VanillaRecipeHelper.addShapedRecipe(provider, true,
+                ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "beam_receiver"),
+                new ItemStack(GcyrExtrasBlocks.BEAM_RECEIVER.get(), 2),
+                "WhW", "WFW", "WwW",
+                'W', new MaterialEntry(TagPrefix.wireGtDouble, GTMaterials.UraniumTriplatinum),
+                'F', new MaterialEntry(TagPrefix.frameGt, GCYRMaterials.Bisalloy400));
+
+        GTRecipeTypes.ASSEMBLER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "beam_receiver"))
+                .inputItems(TagPrefix.wireGtDouble, GTMaterials.UraniumTriplatinum, 6)
+                .inputItems(TagPrefix.frameGt, GCYRMaterials.Bisalloy400)
+                .circuitMeta(6)
+                .outputItems(new ItemStack(GcyrExtrasBlocks.BEAM_RECEIVER.get(), 2))
+                .duration(50)
+                .EUt(16)
+                .save(provider);
+
+        VanillaRecipeHelper.addShapedRecipe(provider, true,
+                ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "beam_former"),
+                new ItemStack(GcyrExtrasBlocks.BEAM_FORMER.get(), 2),
+                "WhW", "WFW", "WwW",
+                'W', new MaterialEntry(TagPrefix.wireGtDouble, GTMaterials.MercuryBariumCalciumCuprate),
+                'F', new MaterialEntry(TagPrefix.frameGt, GTMaterials.Electrum));
+
+        GTRecipeTypes.ASSEMBLER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "beam_former"))
+                .inputItems(TagPrefix.wireGtDouble, GTMaterials.MercuryBariumCalciumCuprate, 6)
+                .inputItems(TagPrefix.frameGt, GTMaterials.Electrum)
+                .circuitMeta(6)
+                .outputItems(new ItemStack(GcyrExtrasBlocks.BEAM_FORMER.get(), 2))
+                .duration(50)
+                .EUt(16)
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLY_LINE_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "orbital_mining_laser"))
+                .inputItems(TagPrefix.frameGt, GTMaterials.NaquadahAlloy)
+                .inputItems(GTItems.EMITTER_LuV.asStack())
+                .inputItems(CustomTags.LuV_CIRCUITS, 2)
+                .inputItems(TagPrefix.plateDouble, GTMaterials.Naquadah, 2)
+                .inputItems(TagPrefix.plate, GTMaterials.TitaniumCarbide, 64)
+                .inputItems(TagPrefix.rod, GTMaterials.TitaniumCarbide, 16)
+                .inputItems(GcyrExtrasBlocks.BEAM_FORMER.get().asItem(), 4)
+                .inputItems(GcyrExtrasBlocks.BEAM_RECEIVER.get().asItem(), 4)
+                .inputFluids(GTMaterials.SolderingAlloy.getFluid(GTValues.L * 4))
+                .outputItems(GcyrExtrasMachines.ORBITAL_MINING_LASER.asStack())
+                .scannerResearch(b -> b
+                        .researchStack(GTMultiMachines.LARGE_MINER[GTValues.LuV].asStack())
+                        .duration(2400)
+                        .EUt(GTValues.VA[GTValues.IV]))
+                .duration(600)
+                .EUt(GTValues.VA[GTValues.LuV])
+                .save(provider);
+
+        GTRecipeTypes.ASSEMBLY_LINE_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "orbital_gas_miner"))
+                .inputItems(TagPrefix.frameGt, GTMaterials.NaquadahAlloy)
+                .inputItems(GTItems.FIELD_GENERATOR_LuV.asStack())
+                .inputItems(CustomTags.LuV_CIRCUITS, 2)
+                .inputItems(TagPrefix.plateDouble, GTMaterials.Naquadah, 2)
+                .inputItems(GcyrExtrasBlocks.GAS_MINER_CASING.get().asItem(), 8)
+                .inputItems(GcyrExtrasBlocks.VACUUM_COUPLING_CASING.get().asItem(), 4)
+                .inputItems(TagPrefix.cableGtSingle, GTMaterials.NiobiumTitanium, 8)
+                .inputItems(TagPrefix.pipeLargeFluid, GTMaterials.Naquadah, 2)
+                .inputFluids(GTMaterials.SolderingAlloy.getFluid(GTValues.L * 4))
+                .outputItems(GcyrExtrasMachines.ORBITAL_GAS_MINER.asStack())
+                .scannerResearch(b -> b
+                        .researchStack(GTMultiMachines.FLUID_DRILLING_RIG[GTValues.EV].asStack())
+                        .duration(2400)
+                        .EUt(GTValues.VA[GTValues.IV]))
+                .duration(600)
+                .EUt(GTValues.VA[GTValues.LuV])
                 .save(provider);
 
         GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES
