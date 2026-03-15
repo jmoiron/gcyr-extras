@@ -232,8 +232,8 @@ public class GcyrExtrasGTAddon implements IGTAddon {
                 .circuitMeta(1)
                 .outputFluids(GTMaterials.Air.getFluid(100_000))
                 .dimension(Level.OVERWORLD)
-                .duration(20 * 30)
-                .EUt(GTValues.VA[GTValues.IV])
+                .duration(20 * 5)
+                .EUt(GTValues.VA[GTValues.LV] / 2)
                 .save(provider);
 
         if (!ModList.get().isLoaded("gtnn")) return;
