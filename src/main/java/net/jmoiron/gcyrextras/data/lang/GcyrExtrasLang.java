@@ -21,6 +21,10 @@ public final class GcyrExtrasLang {
         provider.add("block.gcyrextras.mining_laser_casing", "Mining Laser Casing");
         provider.add("block.gcyrextras.gas_miner_casing", "Gas Miner Casing");
         provider.add("block.gcyrextras.vacuum_coupling_casing", "Vacuum Coupling Casing");
+        provider.add("recipe_type.gcyrextras.orbital_miner", "Orbital Mining");
+        provider.add("recipe_type.gcyrextras.orbital_gas_miner", "Orbital Gas Mining");
+        provider.add("gcyrextras:orbital_miner", "Orbital Mining");
+        provider.add("gcyrextras:orbital_gas_miner", "Orbital Gas Mining");
 
         provider.add("tooltip.gcyrextras.tier", "Tier: %s");
         provider.add("tooltip.gcyrextras.motor.carry_weight", "Max Carry Weight: %s");

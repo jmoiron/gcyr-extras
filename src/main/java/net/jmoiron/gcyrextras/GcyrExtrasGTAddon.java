@@ -5,6 +5,7 @@ import argent_matter.gcyr.common.data.GCYRMaterials;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
@@ -18,7 +19,9 @@ import net.jmoiron.gcyrextras.common.data.GcyrExtrasRecipeTypes;
 import net.jmoiron.gcyrextras.api.registries.GcyrExtrasRegistries;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasBlocks;
 import net.jmoiron.gcyrextras.common.data.GcyrExtrasMachines;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -32,6 +35,10 @@ import java.util.function.Consumer;
 
 @GTAddon
 public class GcyrExtrasGTAddon implements IGTAddon {
+    private static final int ORBITAL_MINER_DURATION = 20 * 15;
+    private static final int ORBITAL_MINER_CHANCE = 6000;
+    private static final int ORBITAL_MINER_EUT = GTValues.VA[GTValues.EV] / 2;
+
 
     @Override
     public GTRegistrate getRegistrate() {
@@ -173,13 +180,52 @@ public class GcyrExtrasGTAddon implements IGTAddon {
                 .EUt(GTValues.VA[GTValues.LuV])
                 .save(provider);
 
-        GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES
-                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "cobblestone_probe"))
-                .circuitMeta(1)
-                .outputItems(new ItemStack(Blocks.COBBLESTONE))
-                .duration(20 * 30)
-                .EUt(28)
-                .save(provider);
+        // TODO: test-only recipe, keep disabled unless a simple orbital miner smoke test is needed again.
+        // GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES
+        //         .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "cobblestone_probe"))
+        //         .circuitMeta(1)
+        //         .outputItems(new ItemStack(Blocks.COBBLESTONE))
+        //         .duration(20 * 30)
+        //         .EUt(28)
+        //         .save(provider);
+
+        addOrbitalMinerRecipe(provider, "luna_orbit_ores",
+                orbitDimension("luna_orbit"),
+                1,
+                TagPrefix.getPrefix("moon"),
+                GTMaterials.Bauxite,
+                GTMaterials.Ilmenite,
+                GTMaterials.Aluminium);
+
+        addOrbitalMinerRecipe(provider, "mars_orbit_ores",
+                orbitDimension("mars_orbit"),
+                2,
+                TagPrefix.getPrefix("mars"),
+                GTMaterials.Tungstate,
+                GTMaterials.Hematite,
+                GTMaterials.Nickel,
+                GTMaterials.Monazite,
+                GTMaterials.Chalcopyrite,
+                GTMaterials.Stibnite);
+
+        addOrbitalMinerRecipe(provider, "mercury_orbit_ores",
+                orbitDimension("mercury_orbit"),
+                3,
+                TagPrefix.getPrefix("mercury"),
+                GTMaterials.Redstone,
+                GTMaterials.Cinnabar,
+                GTMaterials.Ruby);
+
+        addOrbitalMinerRecipe(provider, "venus_orbit_ores",
+                orbitDimension("venus_orbit"),
+                4,
+                TagPrefix.getPrefix("venus"),
+                GTMaterials.Scheelite,
+                GTMaterials.Bauxite,
+                GTMaterials.Bastnasite,
+                GTMaterials.Gold,
+                GTMaterials.Sphalerite,
+                GTMaterials.Cobaltite);
 
         GcyrExtrasRecipeTypes.ORBITAL_GAS_MINER_RECIPES
                 .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, "overworld_air_scoop"))
@@ -209,5 +255,27 @@ public class GcyrExtrasGTAddon implements IGTAddon {
                 .duration(duration)
                 .EUt(0)
                 .save(provider);
+    }
+
+    private static void addOrbitalMinerRecipe(Consumer<FinishedRecipe> provider, String name,
+                                              ResourceKey<Level> dimension, int circuitMeta, TagPrefix orePrefix,
+                                              Material... outputs) {
+        var builder = GcyrExtrasRecipeTypes.ORBITAL_MINER_RECIPES
+                .recipeBuilder(ResourceLocation.fromNamespaceAndPath(GcyrExtras.MOD_ID, name))
+                .circuitMeta(circuitMeta)
+                .inputFluids(GTMaterials.SodiumPotassium.getFluid(5))
+                .dimension(dimension)
+                .duration(ORBITAL_MINER_DURATION)
+                .EUt(ORBITAL_MINER_EUT);
+
+        for (Material output : outputs) {
+            builder.chancedOutput(orePrefix, output, ORBITAL_MINER_CHANCE, 0);
+        }
+
+        builder.save(provider);
+    }
+
+    private static ResourceKey<Level> orbitDimension(String path) {
+        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("gcyr", path));
     }
 }

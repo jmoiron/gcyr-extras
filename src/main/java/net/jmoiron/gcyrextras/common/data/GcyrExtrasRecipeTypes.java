@@ -16,7 +16,7 @@ import static com.lowdragmc.lowdraglib.gui.texture.ProgressTexture.FillDirection
 public final class GcyrExtrasRecipeTypes {
 
     public static final GTRecipeType ORBITAL_MINER_RECIPES = register("orbital_miner", MULTIBLOCK)
-            .setMaxIOSize(1, 1, 1, 0)
+            .setMaxIOSize(1, 9, 1, 0)
             .setEUIO(IO.IN)
             .setSlotOverlay(false, false, true, GuiTextures.INT_CIRCUIT_OVERLAY)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, LEFT_TO_RIGHT)
