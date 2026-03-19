@@ -19,11 +19,15 @@ public final class GcyrExtrasModels {
         prov.simpleBlock(GcyrExtrasBlocks.VACUUM_COUPLING_CASING.get(),
                 prov.models().cubeAll("vacuum_coupling_casing",
                         GcyrExtras.id("block/casings/gcym/vacuum_coupling_casing")));
+        prov.simpleBlock(GcyrExtrasBlocks.SPACESTATION_CORE.get(),
+                prov.models().cubeAll("spacestation_core",
+                        prov.mcLoc("block/iron_block")));
     }
 
     public static void initItemModels(RegistrateItemModelProvider prov) {
         prov.withExistingParent("mining_laser_casing", prov.modLoc("block/mining_laser_casing"));
         prov.withExistingParent("gas_miner_casing", prov.modLoc("block/gas_miner_casing"));
         prov.withExistingParent("vacuum_coupling_casing", prov.modLoc("block/vacuum_coupling_casing"));
+        prov.withExistingParent("spacestation_core", prov.modLoc("block/spacestation_core"));
     }
 }

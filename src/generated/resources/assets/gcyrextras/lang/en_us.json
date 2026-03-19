@@ -9,6 +9,7 @@
   "block.gcyrextras.mining_laser_casing": "Mining Laser Casing",
   "block.gcyrextras.orbital_gas_miner": "Orbital Gas Miner",
   "block.gcyrextras.orbital_mining_laser": "Orbital Mining Laser",
+  "block.gcyrextras.spacestation_core": "Spacestation Core",
   "block.gcyrextras.stellar_fuel_tank": "Stellar Fuel Tank",
   "block.gcyrextras.stellar_rocket_motor": "Stellar Rocket Motor",
   "block.gcyrextras.universal_fuel_tank": "Universal Fuel Tank",
@@ -20,6 +21,7 @@
   "recipe_type.gcyrextras.orbital_miner": "Orbital Mining",
   "tooltip.gcyrextras.motor.carry_weight": "Max Carry Weight: %s",
   "tooltip.gcyrextras.motor.motor_count": "Thruster Power: %s",
+  "tooltip.gcyrextras.spacestation_core.angel_block": "Functions as an angel block.",
   "tooltip.gcyrextras.tank.fluid_capacity": "Fluid Capacity: %s B",
   "tooltip.gcyrextras.tier": "Tier: %s"
 }

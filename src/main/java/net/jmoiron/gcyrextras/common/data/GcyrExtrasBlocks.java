@@ -6,6 +6,8 @@ import argent_matter.gcyr.common.data.GCYRBlocks;
 import net.jmoiron.gcyrextras.GcyrExtras;
 import net.jmoiron.gcyrextras.api.block.ExtraFuelTankProperties;
 import net.jmoiron.gcyrextras.api.block.ExtraRocketMotorType;
+import net.jmoiron.gcyrextras.common.block.SpacestationCoreBlock;
+import net.jmoiron.gcyrextras.common.item.SpacestationCoreItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -39,6 +41,10 @@ public class GcyrExtrasBlocks {
     public static final RegistryObject<Block> MINING_LASER_CASING = registerSimpleBlock("mining_laser_casing");
     public static final RegistryObject<Block> GAS_MINER_CASING = registerSimpleBlock("gas_miner_casing");
     public static final RegistryObject<Block> VACUUM_COUPLING_CASING = registerSimpleBlock("vacuum_coupling_casing");
+    public static final RegistryObject<SpacestationCoreBlock> SPACESTATION_CORE = BLOCKS.register("spacestation_core",
+            () -> new SpacestationCoreBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final RegistryObject<Item> SPACESTATION_CORE_ITEM = ITEMS.register("spacestation_core",
+            () -> new SpacestationCoreItem(SPACESTATION_CORE.get(), new Item.Properties()));
 
     static {
         for (ExtraRocketMotorType type : ExtraRocketMotorType.values()) {

@@ -9,6 +9,7 @@
   "block.gcyrextras.mining_laser_casing": "buısɐƆ ɹǝsɐꞀ buıuıW",
   "block.gcyrextras.orbital_gas_miner": "ɹǝuıW sɐ⅁ ןɐʇıqɹO",
   "block.gcyrextras.orbital_mining_laser": "ɹǝsɐꞀ buıuıW ןɐʇıqɹO",
+  "block.gcyrextras.spacestation_core": "ǝɹoƆ uoıʇɐʇsǝɔɐdS",
   "block.gcyrextras.stellar_fuel_tank": "ʞuɐ⟘ ןǝnℲ ɹɐןןǝʇS",
   "block.gcyrextras.stellar_rocket_motor": "ɹoʇoW ʇǝʞɔoᴚ ɹɐןןǝʇS",
   "block.gcyrextras.universal_fuel_tank": "ʞuɐ⟘ ןǝnℲ ןɐsɹǝʌıu∩",
@@ -20,6 +21,7 @@
   "recipe_type.gcyrextras.orbital_miner": "buıuıW ןɐʇıqɹO",
   "tooltip.gcyrextras.motor.carry_weight": "%s :ʇɥbıǝM ʎɹɹɐƆ xɐW",
   "tooltip.gcyrextras.motor.motor_count": "%s :ɹǝʍoԀ ɹǝʇsnɹɥ⟘",
+  "tooltip.gcyrextras.spacestation_core.angel_block": "˙ʞɔoןq ןǝbuɐ uɐ sɐ suoıʇɔunℲ",
   "tooltip.gcyrextras.tank.fluid_capacity": "ᗺ %s :ʎʇıɔɐdɐƆ pınןℲ",
   "tooltip.gcyrextras.tier": "%s :ɹǝı⟘"
 }

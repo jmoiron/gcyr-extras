@@ -21,6 +21,7 @@ public final class GcyrExtrasLang {
         provider.add("block.gcyrextras.mining_laser_casing", "Mining Laser Casing");
         provider.add("block.gcyrextras.gas_miner_casing", "Gas Miner Casing");
         provider.add("block.gcyrextras.vacuum_coupling_casing", "Vacuum Coupling Casing");
+        provider.add("block.gcyrextras.spacestation_core", "Spacestation Core");
         provider.add("recipe_type.gcyrextras.orbital_miner", "Orbital Mining");
         provider.add("recipe_type.gcyrextras.orbital_gas_miner", "Orbital Gas Mining");
         provider.add("gcyrextras:orbital_miner", "Orbital Mining");
@@ -30,5 +31,6 @@ public final class GcyrExtrasLang {
         provider.add("tooltip.gcyrextras.motor.carry_weight", "Max Carry Weight: %s");
         provider.add("tooltip.gcyrextras.motor.motor_count", "Thruster Power: %s");
         provider.add("tooltip.gcyrextras.tank.fluid_capacity", "Fluid Capacity: %s B");
+        provider.add("tooltip.gcyrextras.spacestation_core.angel_block", "Functions as an angel block.");
     }
 }
