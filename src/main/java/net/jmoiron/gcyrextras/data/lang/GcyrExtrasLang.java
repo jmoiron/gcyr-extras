@@ -24,6 +24,8 @@ public final class GcyrExtrasLang {
         provider.add("block.gcyrextras.spacestation_core", "Spacestation Core");
         provider.add("recipe_type.gcyrextras.orbital_miner", "Orbital Mining");
         provider.add("recipe_type.gcyrextras.orbital_gas_miner", "Orbital Gas Mining");
+        provider.add("gcyrextras.orbital_miner", "Orbital Mining");
+        provider.add("gcyrextras.orbital_gas_miner", "Orbital Gas Mining");
         provider.add("gcyrextras:orbital_miner", "Orbital Mining");
         provider.add("gcyrextras:orbital_gas_miner", "Orbital Gas Mining");
 

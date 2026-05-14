@@ -2,7 +2,7 @@ SHELL := bash
 GRADLEW := ./gradlew
 
 PACK_INSTANCE := quantum-skies-0.8.1
-MOD_VERSION = 0.1.1
+MOD_VERSION = 0.1.3
 
 PRISMLAUNCHER_INSTANCE := PrismLauncher/instances/${PACK_INSTANCE}/minecraft/
 
@@ -45,4 +45,4 @@ clean:
 	rm -rf build/ src/generated/resources/ runs/
 
 install: build
-	cp -v build/libs/gcyrextras-1.20.1-0.1.1.jar "$(MODS_DIR)/"
+	cp -v build/libs/gcyrextras-1.20.1-$(MOD_VERSION).jar "$(MODS_DIR)/"

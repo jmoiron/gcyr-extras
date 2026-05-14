@@ -15,6 +15,8 @@
   "block.gcyrextras.universal_fuel_tank": "Universal Fuel Tank",
   "block.gcyrextras.universal_rocket_motor": "Universal Rocket Motor",
   "block.gcyrextras.vacuum_coupling_casing": "Vacuum Coupling Casing",
+  "gcyrextras.orbital_gas_miner": "Orbital Gas Mining",
+  "gcyrextras.orbital_miner": "Orbital Mining",
   "gcyrextras:orbital_gas_miner": "Orbital Gas Mining",
   "gcyrextras:orbital_miner": "Orbital Mining",
   "recipe_type.gcyrextras.orbital_gas_miner": "Orbital Gas Mining",
